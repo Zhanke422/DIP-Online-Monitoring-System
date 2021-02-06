@@ -1,0 +1,18 @@
+Image Detection (Deep Learning)
+By Anqi
+
+主要目标：
+To detect whether a person is present on the screen or not
+
+附加目标：
+Person classification
+
+使用Tensorflow lite模型或Pytorch mobile模型
+将pre-train model部署在移动端
+
+参考资料：
+Tensorflow lite：https://www.tensorflow.org/lite
+Image detection model on tensorflow: https://www.tensorflow.org/lite/models/object_detection/overview
+
+Pytorch mobile: https://pytorch.org/mobile/home/
+Image detection model on pytorch: https://github.com/pytorch/android-demo-app/tree/master/ObjectDetection
