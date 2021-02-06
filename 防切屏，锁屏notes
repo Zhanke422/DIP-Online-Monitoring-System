@@ -8,5 +8,8 @@ reference
 
 1. https://www.cnblogs.com/miku561/p/10480850.html 
   - 针对windows快捷键切屏/刷新
-2. 
+2. https://codepen.io/discountry/pen/rrQQgQ
+  -记录当前时间与离开屏幕次数
+  -eg. "You have left 1 time".
+  -Limitation：当刷新屏幕时会失效，需进行进一步更改
 
