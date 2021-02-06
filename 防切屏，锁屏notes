@@ -9,7 +9,16 @@ reference
 1. https://www.cnblogs.com/miku561/p/10480850.html 
   - 针对windows快捷键切屏/刷新
 2. https://codepen.io/discountry/pen/rrQQgQ
-  -记录当前时间与离开屏幕次数
-  -eg. "You have left 1 time".
-  -Limitation：当刷新屏幕时会失效，需进行进一步更改
+  - 记录当前时间与切屏次数
+  - 无法检测/记录切换当前屏幕其他tab的次数
+  - eg. "You have left 1 time".
+  - Limitation：当刷新屏幕时会失效，需进行进一步更改
+  - 可用codepen直接展示效果
+3. https://github.com/cywcd/exam
+  - 窗口大小变化作弊提醒
+  - 离开当前窗口作弊提醒
+  - 点击链接转外部提示退出考试 
+  - 防刷新倒计时
+  - 考试违规3次退出当前考试（系统关闭当前窗口）
+  - 禁用鼠标右击，禁用复制粘贴
 
