@@ -1,3 +1,12 @@
-https://www.cnblogs.com/miku561/p/10480850.html 
-- 针对windows快捷键切屏/刷新
+有三个思路：
+1. 锁屏：结束考试之前无法退出或切屏（难）
+2. 限制切屏次数：detect到切屏action并记数。超过一定数目trigger endExam()
+3. 手机端： 
+  1） 可参考forest：退出时间超x秒trigger endExam（）
+
+reference
+
+1. https://www.cnblogs.com/miku561/p/10480850.html 
+  - 针对windows快捷键切屏/刷新
+2. 
 
