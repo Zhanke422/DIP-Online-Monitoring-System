@@ -1,4 +1,11 @@
 Image Detection (Deep Learning)
+
+主要功能
+1. 身份识别
+2. 检测本人一直要在视频内
+3. 不能有其他人出现在视频内
+4. 动作检测
+
 By Anqi
 
 主要目标：
