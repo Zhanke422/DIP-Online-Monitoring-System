@@ -16,3 +16,6 @@ Image detection model on tensorflow: https://www.tensorflow.org/lite/models/obje
 
 Pytorch mobile: https://pytorch.org/mobile/home/
 Image detection model on pytorch: https://github.com/pytorch/android-demo-app/tree/master/ObjectDetection
+
+市面上已有的人脸识别/对比/追踪/人证核验SDK：
+虹软ArcSoft：https://ai.arcsoft.com.cn/course/index.html
