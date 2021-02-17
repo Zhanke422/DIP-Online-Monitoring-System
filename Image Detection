@@ -12,12 +12,12 @@ Main Functions
     - Tensorflow lite：https://www.tensorflow.org/lite
         Image detection model on tensorflow: https://www.tensorflow.org/lite/models/object_detection/overview
     - Pytorch mobile: https://pytorch.org/mobile/home/
-    - Image detection model on pytorch: https://github.com/pytorch/android-demo-app/tree/master/ObjectDetection
+        Image detection model on pytorch: https://github.com/pytorch/android-demo-app/tree/master/ObjectDetection
     - Available free facial recognition SDK：ArcSoft：https://ai.arcsoft.com.cn/course/index.html
 
 2. Hand positions recognition [by Shuyu & Guangyao]
     Objective:
-    - for detecting cheating behaviours like checking the notes
+    - for detecting cheating behaviours, e.g. checking the notes
     Current Research Progress:
     - https://zhuanlan.zhihu.com/p/79272972 
     - https://zhuanlan.zhihu.com/p/32002100?utm_source=wechat_session&utm_medium=social&utm_oi=973321334360666112
@@ -27,6 +27,6 @@ Main Functions
 
 
 
-3. 动作检测（扭头，低头    
-4. 异常片段回放
-5. 考试结束后视频保存
+3. Movement detction 动作检测（扭头，低头)    
+4. Abnornal behaviour video clip playback 异常片段回放
+5. Save the whole video after the exam 考试结束后视频保存
