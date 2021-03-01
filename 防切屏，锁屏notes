@@ -4,6 +4,13 @@
 3. 手机端： 
   1） 可参考forest：退出时间超x秒trigger endExam（）
 
+Requirements
+1. Detect how many times you leave the current window - ##done!
+2. Detect how many times you resize the current window - ##done!
+3. Detect how many times you paste in the current window - ##done!
+4. Detect how many times you refresh the current window - abandoned: cannot be implemented purely in front end
+5. Detect how many times you right click in the current window - ##done!
+
 reference
 
 1. https://www.cnblogs.com/miku561/p/10480850.html 
