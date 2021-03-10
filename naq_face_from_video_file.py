@@ -10,14 +10,10 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')
 output_movie = cv2.VideoWriter('naq_output.avi', fourcc, 29.97, (1280, 720))
 
 # Load some sample pictures and learn how to recognize them.
-hby_image = face_recognition.load_image_file("hbyphoto.jpg")
-hby_face_encoding = face_recognition.face_encodings(hby_image)[0]
-
 naq_image = face_recognition.load_image_file("naqphoto.jpg")
 naq_face_encoding = face_recognition.face_encodings(naq_image)[0]
 
 known_faces = [
-    hby_face_encoding,
     naq_face_encoding
 ]
 
@@ -50,8 +46,6 @@ while True:
 
         name = None
         if match[0]:
-            name = "Hou Boyu"
-        elif match[1]:
             name = "Ni Anqi"
 
         face_names.append(name)
