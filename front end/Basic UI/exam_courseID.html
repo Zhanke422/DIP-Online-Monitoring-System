@@ -68,12 +68,23 @@
 <!-- 					<li><a href="./#intro">Intro</a></li>
 					<li><a href="./#services">Services</a></li>
 					<li><a href="./#team">Team</a></li> -->
-					<li><a href="./#">Notification</a></li>
+					<li><div class="panel panel-default">
+		                <div class="btn btn-White">
+			                <a  data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" href="#NotificationBox">Notification</a>
+		                </div>
+		                <div id="NotificationBox" class="panel-collapse collapse in">
+			                <div class="panel-body">
+				                Here shows the notifications, messages and alerts, chat function will be intergated soon
+			                </div>
+		                </div>
+	                </div></li>
+					
+					<!--<li><a href="./#">Notification</a></li>-->
 					<!-- oncick to trigger to be implemented -->
 					<li><a href="homepage.html" class="btn btn-blue">Finish</a></li>
-
 				</ul>
 			</div>
+        </div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
@@ -251,6 +262,11 @@
 		}
 		});
 	</script> -->
+    <script>
+        $(function () { $('#NotificationBox').collapse('hide')});
+        //$('#NotificationBox').on('show.bs.collapse', function () {
+            //alert('Here shows the notification window, will be integrate soon');})
+    </script>
 </body>
 
 </html>
