@@ -30,9 +30,30 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/homepage')
 def home():
     return render_template("homepage.html")
+
+@app.route('/student_list')
+def student_list():
+    return render_template("student_list.html")
+
+@app.route('/examiner_list')
+def examiner_list():
+    return render_template("examiner_list.html")
+
+@app.route('/exam_courseID')
+def exam_courseID():
+    return render_template("exam_courseID.html")
+
+@app.route('/monitor_courseID')
+def monitor_courseID():
+    return render_template("monitor_courseID.html")
+
+@app.route('/administrator_list')
+def administrator_list():
+    return render_template("administrator_list.html")
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_image():
@@ -99,4 +120,4 @@ def detect_faces_in_image(file_stream):
     return jsonify(result)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

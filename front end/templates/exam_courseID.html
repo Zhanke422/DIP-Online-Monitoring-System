@@ -20,36 +20,71 @@
 	<meta name="msapplication-config" content="img/favicons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<!-- Normalize -->
-	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/normalize.css">
 	<!-- Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 	<!-- Owl -->
-	<link rel="stylesheet" type="text/css" href="css/owl.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/owl.css">
 	<!-- Animate.css -->
-	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/animate.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome-4.1.0/css/font-awesome.min.css">
 	<!-- Elegant Icons -->
-	<link rel="stylesheet" type="text/css" href="fonts/eleganticons/et-icons.css">
+	<link rel="stylesheet" type="text/css" href="/static/fonts/eleganticons/et-icons.css">
 	<!-- Main style -->
-	<link rel="stylesheet" type="text/css" href="css/cardio.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/cardio.css">
+
 </head>
 
 <body>
 	<div class="preloader">
-		<img src="img/loader.gif" alt="Preloader image">
+		<img src="/static/img/loader.gif" alt="Preloader image">
 	</div>
 	<nav class="navbar">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
+				<video id="player" controls autoplay></video>
+
+					<!-- <button id="test-display" onclick="test()">Test</button> -->
+					<canvas id="canvas" width=320 height=240 display=none ></canvas>
+
+					<script>
+					    const player = document.getElementById('player');
+					    const canvas = document.getElementById('canvas');
+					    const context = canvas.getContext('2d');
+					    const captureButton = document.getElementById('capture');
+
+					    document.getElementById('canvas').style.visibility = "hidden";
+
+					    const constraints = {
+					        //audio: true,
+					        video: true
+					    };
+
+						setInterval(function(){ 
+						    //this code runs every second 
+						    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+						}, 1000);
+
+						// TEST
+						// function test(){
+						// 	canvas.style.visibility = "visible";
+						// }
+						
+					    // Attach the video stream to the video element and autoplay.
+					    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+					        player.srcObject = stream;
+					    });
+					</script>
+
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="./#"><img src="img/logo.png" data-active-url="img/logo-active.png" alt=""></a>
+				<a class="navbar-brand" href="./#"><img src="/static/img/logo.png" data-active-url="img/logo-active.png" alt=""></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -57,11 +92,23 @@
 <!-- 					<li><a href="./#intro">Intro</a></li>
 					<li><a href="./#services">Services</a></li>
 					<li><a href="./#team">Team</a></li> -->
-					<li><a href="./#">Help Portal</a></li>
-					<li><a href="./#" data-toggle="modal" data-target="#modal1">Profile</a></li>
-					<li><a href="homepage.html" class="btn btn-blue">Log out</a></li>
+					<li><div class="panel panel-default">
+		                <div class="btn btn-White">
+			                <a  data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" href="#NotificationBox">Notification</a>
+		                </div>
+		                <div id="NotificationBox" class="panel-collapse collapse in">
+			                <div class="panel-body">
+				                Here shows the notifications, messages and alerts, chat function will be intergated soon
+			                </div>
+		                </div>
+	                </div></li>
+					
+					<!--<li><a href="./#">Notification</a></li>-->
+					<!-- oncick to trigger to be implemented -->
+					<li><a href="homepage" class="btn btn-blue">Finish</a></li>
 				</ul>
 			</div>
+        </div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
@@ -89,9 +136,9 @@
 				<h3 class="white">Profile</h3>
 				<form action="" class="popup-form">
 					<!-- Trying to insert profile photo here -->
-					<p class="form-control form-white"> Lin Lixian </p>
-					<p class="form-control form-white"> IEM Yr 3 </p>
-					<p class="form-control form-white"> Student </p>
+					<p class="form-control form-white"> Du Zhanke </p>
+					<p class="form-control form-white"> School of EEE </p>
+					<p class="form-control form-white"> Examiner </p>
 						<!-- <ul class="dropdown-menu animated fadeIn" role="menu" aria-labelledby="dLabel">
 							<li class="animated lightSpeedIn"><a href="#student_1">Student</a></li>
 							<li class="animated lightSpeedIn"><a href="examiner_list">Examiner</a></li>
@@ -112,12 +159,13 @@
 		<div class="cut cut-top"></div>
 		<div class="container">
 			<div class="row intro-tables">
-				<div class="col-md-8 col-md-offset-2">
-					<div class="intro-table intro-table-first">
+				<div class="col-md-12">
+					<img class="col-md-10 col-md-offset-1" src="/static/img/IM4791 2018-2019 Semester 2.jpg"/>
+					<!-- <div class="intro-table intro-table-first">
 						<h5 class="white heading">Upcoming Exam</h5>
 						<div class="owl-carousel owl-schedule bottom">
 							<div class="item">
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">IM4791</h5>
@@ -127,7 +175,7 @@
 										</div>
 									</div>
 								</a>
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">IM3002</h5>
@@ -137,7 +185,7 @@
 										</div>
 									</div>
 								</a>
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">MH8300</h5>
@@ -149,7 +197,7 @@
 								</a>
 							</div>
 							<div class="item">
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">IM2003</h5>
@@ -159,7 +207,7 @@
 										</div>
 									</div>
 								</a>
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">EE8087</h5>
@@ -169,7 +217,7 @@
 										</div>
 									</div>
 								</a>
-								<a href="exam_courseID.html">
+								<a href="monitor_courseID.html">
 									<div class="schedule-row row">
 										<div class="col-xs-6">
 											<h5 class="regular white">IM3003</h5>
@@ -180,7 +228,7 @@
 									</div>
 								</a>
 							</div>
-							<!-- <div class="item">
+							<div class="item">
 								<div class="schedule-row row">
 									<div class="col-xs-6">
 										<h5 class="regular white">Early Exercise</h5>
@@ -205,9 +253,9 @@
 										<h5 class="white">8:30 - 10:00</h5>
 									</div>
 								</div>
-							</div> -->
+							</div> 
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -238,6 +286,11 @@
 		}
 		});
 	</script> -->
+    <script>
+        $(function () { $('#NotificationBox').collapse('hide')});
+        //$('#NotificationBox').on('show.bs.collapse', function () {
+            //alert('Here shows the notification window, will be integrate soon');})
+    </script>
 </body>
 
 </html>
