@@ -35,6 +35,8 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/cardio.css">
 	<!-- video style -->
 	<link rel="stylesheet" type="text/css" href="/static/css/video.css">
+	<!-- Notification style -->
+	<link rel="stylesheet" type="text/css" href="static/css/app.css">
 </head>
 
 <body>
@@ -160,6 +162,7 @@
 					        		<img src="http://placehold.it/270x270" alt="image not found" title="">     
 					        	</div>
 					   		</div>
+					   	</div>
 				</section>  
 			</div>
 		</div>
@@ -191,6 +194,34 @@
 		</div>
 	</div>
 
+	<div class="chatbubble" >
+            <div class="unexpanded">
+                <div class="title">Notification</div>
+            </div>
+            <div class="expanded chat-window">
+              <div class="login-screen container">
+              	<div class="input">
+                  <form class="form-inline" id="messageSupport">
+                    <div class="form-group">
+                      <input type="text" autocomplete="off" class="form-control" id="newMessage" placeholder="Enter Message">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </form>
+                </div>
+
+                <!-- <form id="loginScreenForm">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="fullname" placeholder="Name*" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="Email Address*" required>
+                  </div>
+                  <button type="submit" class="btn btn-block btn-primary">Start Chat</button>
+                </form> -->
+              </div>
+            </div> 
+	</div>
+
 	<!-- Holder for mobile navigation -->
 	<div class="mobile-nav">
 		<ul>
@@ -205,6 +236,12 @@
 	<script src="/static/js/typewriter.js"></script>
 	<script src="/static/js/jquery.onepagenav.js"></script>
 	<script src="/static/js/main.js"></script>
+	<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+        <script src="static/js/jquery.js"></script>
+        <script src="static/js/popper.js"></script>
+        <script src="static/js/bootstrap.js"></script>
+        <script src="static/js/axios.js"></script>
+        <script src="static/js/app.js"></script>
 <!-- 	<script>
 		$('#HomepageSubmit').on('click', function(e){
 			e.preventDefault();
