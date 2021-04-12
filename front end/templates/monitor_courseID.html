@@ -83,13 +83,12 @@
 					   <div class="grid__container">
 					        <div class="grid__item">
 					            <div class="grid__img">
-					        		<img src="http://placehold.it/270x270" alt="image not found" title="">   
-
+					        		<img id="student" src="" alt="image not found" title="" width = 270 height = 270>
 					        	</div>
 					   		</div>
 							<div class="grid__item">
 					            <div class="grid__img">
-					        		<img src="http://placehold.it/270x270" alt="image not found" title="">     
+					        		<img src="http://placehold.it/270x270" alt="image not found" title="">
 					        	</div>
 					   		</div>
 					   		<div class="grid__item">
@@ -242,6 +241,15 @@
         <script src="static/js/bootstrap.js"></script>
         <script src="static/js/axios.js"></script>
         <script src="static/js/app.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
+	<script>
+		const student = document.getElementById('student')
+		var socket = io.connect('http://' + document.domain + ':' + location.port + '/client');
+		socket.on("video_feed", function(arg){
+			student.src = arg.data;
+		});
+	</script>
 <!-- 	<script>
 		$('#HomepageSubmit').on('click', function(e){
 			e.preventDefault();
