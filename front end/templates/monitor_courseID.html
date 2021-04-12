@@ -199,6 +199,8 @@
             </div>
             <div class="expanded chat-window">
               <div class="chats">
+			  	<ul class="messages clearfix">
+                </ul>
               	<div class="input">
                   <form class="form-inline" id="messageSupport">
                     <div class="form-group">
@@ -249,6 +251,22 @@
 		var socket = io.connect('http://' + document.domain + ':' + location.port + '/client');
 		socket.on("video_feed", function(arg){
 			student.src = arg.data;
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			console.log("haha");
+		});
+		$("#messageSupport").on("submit", function(){
+			var text = $("#newMessage").val();
+			console.log(text);
+			$("ul.messages").append(
+						'<li class="clearfix message">' +
+                            '<div class="message">' + text +'</div>' +
+                        '</li>'
+			);
+			$("ul.messages").show();
+			$("#newMessage").val("");
 		});
 	</script>
 <!-- 	<script>
