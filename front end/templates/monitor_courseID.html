@@ -254,18 +254,19 @@
 		});
 	</script>
 	<script>
-		$(document).ready(function(){
-			console.log("haha");
-		});
+		// When form with id messsageSupport is submitted
 		$("#messageSupport").on("submit", function(){
+			// get text from input with id newMessage
 			var text = $("#newMessage").val();
-			console.log(text);
+			// append to the list with class messages
 			$("ul.messages").append(
 						'<li class="clearfix message">' +
                             '<div class="message">' + text +'</div>' +
                         '</li>'
 			);
+			// show the messages
 			$("ul.messages").show();
+			// clear the input
 			$("#newMessage").val("");
 		});
 	</script>
