@@ -198,15 +198,18 @@
                 <div class="title">Notification</div>
             </div>
             <div class="expanded chat-window">
-              <div class="login-screen container">
+              <div class="chats">
+			  	<ul class="messages clearfix">
+                </ul>
               	<div class="input">
                   <form class="form-inline" id="messageSupport">
                     <div class="form-group">
                       <input type="text" autocomplete="off" class="form-control" id="newMessage" placeholder="Enter Message">
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" class="btn-primary">Send</button>
                   </form>
                 </div>
+			  </div>
 
                 <!-- <form id="loginScreenForm">
                   <div class="form-group">
@@ -248,6 +251,23 @@
 		var socket = io.connect('http://' + document.domain + ':' + location.port + '/client');
 		socket.on("video_feed", function(arg){
 			student.src = arg.data;
+		});
+	</script>
+	<script>
+		// When form with id messsageSupport is submitted
+		$("#messageSupport").on("submit", function(){
+			// get text from input with id newMessage
+			var text = $("#newMessage").val();
+			// append to the list with class messages
+			$("ul.messages").append(
+						'<li class="clearfix message">' +
+                            '<div class="message">' + text +'</div>' +
+                        '</li>'
+			);
+			// show the messages
+			$("ul.messages").show();
+			// clear the input
+			$("#newMessage").val("");
 		});
 	</script>
 <!-- 	<script>
