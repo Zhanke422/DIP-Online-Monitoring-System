@@ -4,7 +4,7 @@
     a:hover {
       color: #fff;
     }
-
+ 
     .btn-secondary,
     .btn-secondary:hover,
     .btn-secondary:focus {
@@ -13,19 +13,19 @@
       background-color: #fff;
       border: .05rem solid #fff;
     }
-
+ 
     html,
     body {
       height: 100%;
       background-color: #333;
     }
-
+ 
     body {
       color: #fff;
       text-align: center;
       text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
     }
-
+ 
     .site-wrapper {
       display: table;
       width: 100%;
@@ -171,13 +171,13 @@
     }
  
     .chatbubble .chat-window {
-      overflow: hidden;
+      overflow: auto;
     }
  
-    /*.chatbubble .loader-wrapper {
+    .chatbubble .loader-wrapper {
         margin-top: 50px;
         text-align: center;
-    }*/
+    }
  
     .chatbubble .messages {
         display: none;
@@ -215,7 +215,7 @@
         left: 0;
         width: 100%;
         background: #f0f0f0;
-        display: block;
+        display: none;
     }
  
     .chatbubble .chats .input .form-group {
@@ -223,28 +223,18 @@
     }
  
     .chatbubble .chats .input input {
-        height: 32px;
         width: 100%;
-        padding: 5px !important;
-        font-size: 12px;
-        border-radius: 10px;
     }
  
     .chatbubble .chats .input button {
-        width: 15%;
-        margin-left: 10px;
-        padding: 5px 10px;
-        font-size: 12px;
-        border: 2px solid transparent;
-        border-radius: 5px;
+        width: 20%;
     }
  
     .chatbubble .chats {
-      display: block;
+      display: none;
     }
  
-    /*.chatbubble .login-screen {
-      width： 100%；
+    .chatbubble .login-screen {
       margin-top: 20px;
       display: none;
     }
@@ -262,18 +252,18 @@
       font-size: 10vh;
       opacity: 0.8;
     }
-
+ 
     .chatbubble .loader span {
       display: inline-block;
       -webkit-animation: pulse 0.4s alternate infinite ease-in-out;
               animation: pulse 0.4s alternate infinite ease-in-out;
     }
-
+ 
     .chatbubble .loader span:nth-child(odd) {
       -webkit-animation-delay: 0.4s;
               animation-delay: 0.4s;
     }
-
+ 
     @-webkit-keyframes pulse {
       to {
         -webkit-transform: scale(0.8);
@@ -281,11 +271,11 @@
         opacity: 0.5;
       }
     }
-
+ 
     @keyframes pulse {
       to {
         -webkit-transform: scale(0.8);
                 transform: scale(0.8);
         opacity: 0.5;
       }
-    }*/
+    }
