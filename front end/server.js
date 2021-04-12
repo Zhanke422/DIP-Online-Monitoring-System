@@ -2,11 +2,11 @@ var express = require('express')
 var server = express()
 
 /* using files inside 'assets' folder */
-server.use(express.static('assets'))
+server.use(express.static('/static'))
 
 /* your landing page */
 server.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/templates/index.html');
 });
 
 // server.get('/staff_1.html', (req, res) => {
