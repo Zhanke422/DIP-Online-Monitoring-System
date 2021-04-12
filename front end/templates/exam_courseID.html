@@ -46,38 +46,40 @@
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<video id="player" controls autoplay></video>
+				<video id="player" controls autoplay width=270 height=270></video>
 
 					<!-- <button id="test-display" onclick="test()">Test</button> -->
-					<canvas id="canvas" width=320 height=240 display=none ></canvas>
-
+				<canvas id="canvas" width=270 height=270 ></canvas>
+				<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
 					<script>
 					    const player = document.getElementById('player');
 					    const canvas = document.getElementById('canvas');
-					    const context = canvas.getContext('2d');
-					    const captureButton = document.getElementById('capture');
+						var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + '/client');
 
-					    document.getElementById('canvas').style.visibility = "hidden";
+					    canvas.style.visibility = "hidden";
 
 					    const constraints = {
 					        //audio: true,
 					        video: true
 					    };
 
-						setInterval(function(){ 
-						    //this code runs every second 
-						    context.drawImage(player, 0, 0, canvas.width, canvas.height);
-						}, 1000);
 
-						// TEST
-						// function test(){
-						// 	canvas.style.visibility = "visible";
-						// }
-						
-					    // Attach the video stream to the video element and autoplay.
-					    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-					        player.srcObject = stream;
-					    });
+						// Attach the video stream to the video element and autoplay.
+						navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+									player.srcObject = stream;
+						});
+
+						// screenshot and emit picture data to server
+						// Select HTML video element where the webcam data is
+						const video = document.querySelector("#player");
+
+						setInterval(function(){
+							canvas.getContext('2d').drawImage(video, 0, 0, 270, 270);
+							const data = canvas.toDataURL('image/jpeg', 0.5); // 0.5 indicates quality of data, scale from 0.0 to 1.0
+							socket.emit('webcam capture', data);
+						}, 20); // execute every 20 ms
+
 					</script>
 
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -104,7 +106,7 @@
 			                </div>
 		                </div>
 	                </div></li> -->
-					
+
 					<!--<li><a href="./#">Notification</a></li>-->
 					<!-- oncick to trigger to be implemented -->
 					<li><a href="homepage" class="btn btn-blue">Finish</a></li>
@@ -255,7 +257,7 @@
 										<h5 class="white">8:30 - 10:00</h5>
 									</div>
 								</div>
-							</div> 
+							</div>
 						</div>
 					</div> -->
 				</div>
@@ -309,6 +311,9 @@
         <script src="static/js/bootstrap.js"></script>
         <script src="static/js/axios.js"></script>
         <script src="static/js/app.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
 <!-- 	<script>
 		$('#HomepageSubmit').on('click', function(e){
 			e.preventDefault();
