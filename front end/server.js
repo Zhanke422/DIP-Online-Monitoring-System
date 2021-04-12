@@ -2,7 +2,7 @@ var express = require('express')
 var server = express()
 
 /* using files inside 'assets' folder */
-server.use(express.static('/static'))
+server.use(express.static('static'))
 
 /* your landing page */
 server.get('/', (req, res) => {
