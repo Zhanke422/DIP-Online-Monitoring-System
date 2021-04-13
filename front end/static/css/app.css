@@ -201,8 +201,8 @@
     }
  
     .chatbubble .messages li.support {
-        float: right;
-        text-align: right;
+        float: left;
+        text-align: left;
         color: #fff;
         background-color: #e33d3d;
         border-radius: 5px 5px 0 5px;

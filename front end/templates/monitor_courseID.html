@@ -61,7 +61,7 @@
 <!-- 					<li><a href="./#intro">Intro</a></li>
 					<li><a href="./#services">Services</a></li>
 					<li><a href="./#team">Team</a></li> -->
-					<li><a href="./#">Notification</a></li>
+<!--					<li><a href="./#">Notification</a></li>-->
 					<li><a href="homepage" class="btn btn-blue">Finish</a></li>
 				</ul>
 			</div>
@@ -199,12 +199,12 @@
             </div>
             <div class="expanded chat-window">
               <div class="chats">
-			  	<ul class="messages clearfix">
+			  	<ul class="messages clearfix" id = "messages">
                 </ul>
               	<div class="input">
                   <form class="form-inline" id="messageSupport">
                     <div class="form-group">
-                      <input type="text" autocomplete="off" class="form-control" id="newMessage" placeholder="Enter Message">
+                      <input type="text" autocomplete="off" class="form-control" name = "message" id="newMessage" placeholder="Enter Message">
                     </div>
                     <button type="submit" class="btn-primary">Send</button>
                   </form>
@@ -253,7 +253,7 @@
 			student.src = arg.data;
 		});
 	</script>
-	<script>
+<!-- 	<script>
 		// When form with id messsageSupport is submitted
 		$("#messageSupport").on("submit", function(){
 			// get text from input with id newMessage
@@ -267,9 +267,9 @@
 			// show the messages
 			$("ul.messages").show();
 			// clear the input
-			$("#newMessage").val("");
+			// $("#newMessage").val("");
 		});
-	</script>
+	</script> -->
 <!-- 	<script>
 		$('#HomepageSubmit').on('click', function(e){
 			e.preventDefault();
@@ -283,5 +283,43 @@
 		});
 	</script> -->
 </body>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
+<script>
+	// const socket = io.connect("http://127.0.0.1:5000");
+	
+    socket.on('connect', function(){
+	    let newMessage = document.getElementById('newMessage');
+	    document.getElementById('messageSupport').onsubmit = function(e){
+	        e.preventDefault();
+	        let message = newMessage.value.trim();
+	        if(message.length){
+	            socket.emit('send_message' , message);
+	            // console.log(message);
+	        }
+	        newMessage.value = '';
+            newMessage.focus();
+	    }
+	    //Received the message and print on the notification field
+	    socket.on('receive_message', function (data) {
+        // console.log(data);
+        // const newNode = document.createElement('div');
+        // newNode.innerHTML = '${data.message}';
+        // document.getElementById('messages').appendChild(newNode);
+        // When form with id messsageSupport is submitted
+			// get text from input with id newMessage
+			var text = data;
+			// append to the list with class messages
+			$("ul.messages").append(
+						'<li class="clearfix message">' +
+                            '<div class="message">' + text + '</div>' +
+                        '</li>'
+			);
+			// show the messages
+			$("ul.messages").show();
+        });
+    });
+
+</script>
 
 </html>

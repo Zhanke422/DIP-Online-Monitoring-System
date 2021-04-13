@@ -17,13 +17,14 @@
 # $ pip3 install flask
 
 # import face_recognition
-import eventlet
+# import eventlet
 from flask import Flask, jsonify, request, redirect, render_template
 from flask_socketio import SocketIO, emit
+
 # from engineio.payload import Payload
 # You can change this to any folder on your system
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-eventlet.monkey_patch()
+# eventlet.monkey_patch()
 # Payload.max_decode_packets = 500
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -70,6 +71,13 @@ def webcam_capture(input_frame):
 @app.route('/monitor_courseID')
 def monitor_courseID():
     return render_template("monitor_courseID.html")
+
+    # send message through notification window
+@socketio.on('send_message', namespace='/client')
+def handle_send_message_event(data):
+    # print("Received a message: "+ data)
+    # app.logger.info("Received a message: {}"['data'])
+    emit('receive_message', data, broadcast = True)
 
 
 @app.route('/administrator_list')
@@ -140,6 +148,8 @@ def detect_faces_in_image(file_stream):
         "is_picture_of_who": is_who,
     }
     return jsonify(result)
+
+
 
 
 if __name__ == "__main__":
