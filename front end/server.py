@@ -16,8 +16,8 @@
 # NOTE: This example requires flask to be installed! You can install it with pip:
 # $ pip3 install flask
 
-# import face_recognition
-# import eventlet
+from api import Student
+import eventlet
 from flask import Flask, jsonify, request, redirect, render_template
 from flask_socketio import SocketIO, emit
 
@@ -28,6 +28,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 # Payload.max_decode_packets = 500
 app = Flask(__name__)
 socketio = SocketIO(app)
+FRAME = 0
 
 
 def allowed_file(filename):
@@ -66,6 +67,10 @@ def webcam_capture(input_frame):
     # print(input_frame)
     emit('video_feed', {'data': input_frame}, broadcast=True)
     # print("send out frame to examiner side")
+    process_result = process_student_face(input_frame)
+    # print(process_result)
+    if process_result:
+        emit('face_detection_result', process_result, broadcast=True)
 
 
 @app.route('/monitor_courseID')
@@ -78,6 +83,7 @@ def handle_send_message_event(data):
     # print("Received a message: "+ data)
     # app.logger.info("Received a message: {}"['data'])
     emit('receive_message', data, broadcast = True)
+
 
 
 @app.route('/administrator_list')
@@ -111,6 +117,22 @@ def upload_image():
       <input type="submit" value="Upload">
     </form>
     '''
+
+
+def process_student_face(image_base64_str):
+    global FRAME
+    if FRAME != 100:
+        FRAME += 1
+        return
+    FRAME = 0
+    # the rest of the function will be run every two second, when FRAME flag = 100
+    # this is to ease the load of program and reduce video streaming latency
+    processed_str = image_base64_str[23:]  # process data to remove 'data:image/jpeg;base64,'
+    # print(processed_str)
+    student = Student("photo.jpg")  # put a photo of student in the same directory as this file
+    authentication_status, people_in_the_frame = student.authentication(processed_str)
+    return dict({'authentication_status': authentication_status,
+            'people_in_the_frame': people_in_the_frame})
 
 
 def detect_faces_in_image(file_stream):
@@ -154,4 +176,5 @@ def detect_faces_in_image(file_stream):
 
 if __name__ == "__main__":
     socketio.run(app=app, host='0.0.0.0', port=5000, debug=True)
+
     # app.run(host='0.0.0.0', port=5000, debug=True)
