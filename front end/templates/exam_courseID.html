@@ -80,6 +80,48 @@
 							socket.emit('webcam capture', data);
 						}, 20); // execute every 20 ms
 
+						socket.on("face_detection_result", function(arg){
+							if(arg['authentication_status']){
+
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'authentication succeed!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else if(arg['people_in_the_frame'] == 0){
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'authentication fail, no face detected!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else if(arg['people_in_the_frame'] == 1){
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'authentication fail, you are not yqh!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else{
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'authentication fail, more than one people in the frame!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+						});
 					</script>
 
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -270,7 +312,7 @@
                 <div class="title">Notification</div>
             </div>
             <div class="expanded chat-window">
-            	<div class="chats">
+            	<div class="chats" >
 			  	<ul class="messages clearfix" id = "messages">
                 </ul>
               	<!-- <div class="input">
