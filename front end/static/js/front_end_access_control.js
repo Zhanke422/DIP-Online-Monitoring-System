@@ -14,7 +14,7 @@ function myTimer() {
     var d = new Date();
     var t = d.toLocaleTimeString();
     //The innerHTML property defines the HTML content
-    document.getElementById("enter").innerHTML = t;
+    // document.getElementById("enter").innerHTML = t;
 
 }
 
@@ -26,7 +26,10 @@ function leave() {
     li.innerHTML = "You left " + count_leave + unit
     console.log("you leaved");
     document.getElementById('messages').append(li);
-
+    if (count_resize >= 5){
+      var button = document.getElementById("finish");
+      button.click();
+    }
 
 
 }
@@ -36,7 +39,8 @@ function resize(){
     var li = document.createElement("li");
     var unit = (count_resize === 1) ? " time" : " times"
     li.innerHTML = "You resize " + count_resize + unit
-    document.getElementById('record').append(li);
+    document.getElementById('messages').append(li);
+
 }
 
 function enter() {
@@ -51,7 +55,7 @@ function refresh(){
       var li = document.createElement("li");
       var unit = (count_refresh === 1) ? " time" : " times"
       li.innerHTML = "You refreshed " + count_leave + unit
-      document.getElementById('record').append(li);
+      document.getElementById('messages').append(li);
     }
 }
 
@@ -61,7 +65,7 @@ function rightClick(){
     var li = document.createElement("li");
     var unit = (count_rightClick === 1) ? " time" : " times"
     li.innerHTML = "You right clicked " + count_rightClick + unit
-    document.getElementById('record').append(li);
+    document.getElementById('messages').append(li);
 }
 
 function paste(){
@@ -70,7 +74,7 @@ function paste(){
     var li = document.createElement("li");
     var unit = (count_paste === 1) ? " time" : " times"
     li.innerHTML = "You pasted " + count_paste + unit
-    document.getElementById('record').append(li);
+    document.getElementById('messages').append(li);
 }
 
 window.addEventListener("focus",enter);
