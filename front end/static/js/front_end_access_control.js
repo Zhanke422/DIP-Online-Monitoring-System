@@ -28,7 +28,7 @@ function leave() {
     socket.emit('access control', "Student" + text);
     console.log("you leaved");
     document.getElementById('messages').append(li);
-    if (count_resize >= 5){
+    if (count_leave >= 5){
       var button = document.getElementById("finish");
       button.click();
     }
@@ -44,6 +44,10 @@ function resize(){
     li.innerHTML = "System Warning: You" + text;
     document.getElementById('messages').append(li);
     socket.emit('access control', "Student" + text);
+    if (count_resize >= 5){
+      var button = document.getElementById("finish");
+      button.click();
+    }
 
 }
 
@@ -70,6 +74,9 @@ function rightClick(){
     var unit = (count_rightClick === 1) ? " time" : " times"
     li.innerHTML = "You right clicked " + count_rightClick + unit
     document.getElementById('messages').append(li);
+    if (count_rightClick >= 5){
+      var button = document.getElementById("finish");
+      button.click();
 }
 
 function paste(){
@@ -79,6 +86,9 @@ function paste(){
     var unit = (count_paste === 1) ? " time" : " times"
     li.innerHTML = "You pasted " + count_paste + unit
     document.getElementById('messages').append(li);
+    if (count_paste >= 5){
+      var button = document.getElementById("finish");
+      button.click();
 }
 
 window.addEventListener("focus",enter);
