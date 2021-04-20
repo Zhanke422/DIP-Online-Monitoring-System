@@ -22,8 +22,10 @@ function leave() {
     count_leave++;
     clearInterval(setTimer);
     var li = document.createElement("li");
-    var unit = (count_leave === 1) ? " time" : " times"
-    li.innerHTML = "You left " + count_leave + unit
+    var unit = (count_leave === 1) ? " time" : " times";
+    text = " left " + count_leave + unit;
+    li.innerHTML = "System Warning: You" + text;
+    socket.emit('access control', "Student" + text);
     console.log("you leaved");
     document.getElementById('messages').append(li);
     if (count_resize >= 5){
@@ -37,9 +39,11 @@ function leave() {
 function resize(){
     count_resize++;
     var li = document.createElement("li");
-    var unit = (count_resize === 1) ? " time" : " times"
-    li.innerHTML = "You resize " + count_resize + unit
+    var unit = (count_resize === 1) ? " time" : " times";
+    text = " resize " + count_resize + unit;
+    li.innerHTML = "System Warning: You" + text;
     document.getElementById('messages').append(li);
+    socket.emit('access control', "Student" + text);
 
 }
 
