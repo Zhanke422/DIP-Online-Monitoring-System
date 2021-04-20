@@ -252,6 +252,15 @@
 		socket.on("video_feed", function(arg){
 			student.src = arg.data;
 		});
+		socket.on("status_change", function(arg){
+			$("ul.messages").append(
+						'<li class="clearfix support">' +
+						'<div class="message">' + arg +'</div>' +
+						'</li>'
+				);
+				// show the messages
+				$("ul.messages").show();
+		});
 	</script>
 <!-- 	<script>
 		// When form with id messsageSupport is submitted
