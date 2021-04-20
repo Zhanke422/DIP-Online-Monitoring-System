@@ -71,7 +71,15 @@ def webcam_capture(input_frame):
     # print(process_result)
     if process_result:
         emit('face_detection_result', process_result, broadcast=True)
+        status_change = check_status_change(process_result)
+        if status_change:
+            emit('status_change', status_change, broadcast=True)
 
+
+@socketio.on('access control', namespace='/client')
+def access_control(message):
+    # print(message)
+    emit('status_change', message, broadcast=True)
 
 @app.route('/monitor_courseID')
 def monitor_courseID():
@@ -133,6 +141,17 @@ def process_student_face(image_base64_str):
     authentication_status, people_in_the_frame = student.authentication(processed_str)
     return dict({'authentication_status': authentication_status,
             'people_in_the_frame': people_in_the_frame})
+
+
+def check_status_change(result):
+    if result['authentication_status']:
+        return
+    elif result['people_in_the_frame'] == 0:
+        return "student leave the screen!"
+    elif result['people_in_the_frame'] == 1:
+        return "people in front of screen is not student!"
+    else:
+        return "there are " + str(result['people_in_the_frame']) + " people in front of screen!"
 
 
 def detect_faces_in_image(file_stream):
