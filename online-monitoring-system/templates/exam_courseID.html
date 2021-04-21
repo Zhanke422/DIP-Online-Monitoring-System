@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NTU Online Exam System</title>
+	<meta name="description" content="A powerful online exam system" />
+	<meta name="keywords" content="html template, css, free, one page, gym, fitness, web design" />
+	<meta name="author" content="dzk/llx" />
+	<!-- Favicons (created with http://realfavicongenerator.net/)-->
+	<link rel="apple-touch-icon" sizes="57x57" href="static/img/favicons/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="static/img/favicons/apple-touch-icon-60x60.png">
+	<link rel="icon" type="image/png" href="static/img/favicons/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="static/img/favicons/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="static/img/favicons/manifest.json">
+	<link rel="shortcut icon" href="static/img/favicons/favicon.ico">
+	<meta name="msapplication-TileColor" content="#00a8ff">
+	<meta name="msapplication-config" content="static/img/favicons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<!-- Normalize -->
+	<link rel="stylesheet" type="text/css" href="static/css/normalize.css">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+	<!-- Owl -->
+	<link rel="stylesheet" type="text/css" href="static/css/owl.css">
+	<!-- Animate.css -->
+	<link rel="stylesheet" type="text/css" href="static/css/animate.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.1.0/css/font-awesome.min.css">
+	<!-- Elegant Icons -->
+	<link rel="stylesheet" type="text/css" href="static/fonts/eleganticons/et-icons.css">
+	<!-- Main style -->
+	<link rel="stylesheet" type="text/css" href="static/css/cardio.css">
+    <!-- Notification style -->
+	<link rel="stylesheet" type="text/css" href="static/css/app.css">
+</head>
+
+<body>
+	<div class="preloader">
+		<img src="static/img/loader.gif" alt="Preloader image">
+	</div>
+	<nav class="navbar">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<video id="player" autoplay width=270 height=270></video>
+
+					<!-- <button id="test-display" onclick="test()">Test</button> -->
+				<canvas id="canvas" width=270 height=270 ></canvas>
+				<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
+					<script>
+					    const player = document.getElementById('player');
+					    const canvas = document.getElementById('canvas');
+						var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + '/client');
+
+					    canvas.style.visibility = "hidden";
+
+					    const constraints = {
+					        //audio: true,
+					        video: true
+					    };
+
+
+						// Attach the video stream to the video element and autoplay.
+						navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+									player.srcObject = stream;
+						});
+
+						// screenshot and emit picture data to server
+						// Select HTML video element where the webcam data is
+						const video = document.querySelector("#player");
+
+						setInterval(function(){
+							canvas.getContext('2d').drawImage(video, 0, 0, 270, 270);
+							const data = canvas.toDataURL('image/jpeg', 0.5); // 0.5 indicates quality of data, scale from 0.0 to 1.0
+							socket.emit('webcam capture', data);
+						}, 20); // execute every 20 ms
+
+						socket.on("face_detection_result", function(arg){
+							if(arg['authentication_status']){
+
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'System Message: authentication succeed!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else if(arg['people_in_the_frame'] == 0){
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'System Warning: authentication fail, no face detected!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else if(arg['people_in_the_frame'] == 1){
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'System Warning: authentication fail, you are not yqh!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+							else{
+							//	authentication fail, gives alarm and continue with authentication process
+								$("ul.messages").append(
+										'<li class="clearfix support">' +
+										'<div class="message">' + 'System Warning: authentication fail, more than one people in the frame!' +'</div>' +
+										'</li>'
+								);
+								// show the messages
+								$("ul.messages").show();
+							}
+						});
+					</script>
+
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="./#"><img src="static/img/logo.png" data-active-url="static/img/logo-active.png" alt=""></a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right main-nav">
+<!-- 					<li><a href="./#intro">Intro</a></li>
+					<li><a href="./#services">Services</a></li>
+					<li><a href="./#team">Team</a></li> -->
+					<!-- <li><div class="panel panel-default">
+		                <div class="btn btn-White">
+			                <a  data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" href="#NotificationBox">Notification</a>
+		                </div>
+		                <div id="NotificationBox" class="panel-collapse collapse in">
+			                <div class="panel-body">
+				                Here shows the notifications, messages and alerts, chat function will be intergated soon
+			                </div>
+		                </div>
+	                </div></li> -->
+
+					<!--<li><a href="./#">Notification</a></li>-->
+					<!-- oncick to trigger to be implemented -->
+					<li><a href="homepage" class="btn btn-blue" id="finish">Finish</a></li>
+				</ul>
+			</div>
+        </div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<header id="intro">
+		<div class="container">
+			<div class="table">
+				<div class="header-text">
+					<div class="row">
+						<div class="col-md-12 text-center">
+
+							<h1 class="white typed">Believe in yourself and all the best!</h1>
+							<!-- <span class="typed-cursor">|</span> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content modal-popup">
+				<a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
+				<h3 class="white">Profile</h3>
+				<form action="" class="popup-form">
+					<!-- Trying to insert profile photo here -->
+					<p class="form-control form-white"> Du Zhanke </p>
+					<p class="form-control form-white"> School of EEE </p>
+					<p class="form-control form-white"> Examiner </p>
+						<!-- <ul class="dropdown-menu animated fadeIn" role="menu" aria-labelledby="dLabel">
+							<li class="animated lightSpeedIn"><a href="#student_1">Student</a></li>
+							<li class="animated lightSpeedIn"><a href="examiner_list">Examiner</a></li>
+						</ul> -->
+					<!-- <div class="checkbox-holder text-left">
+						<div class="checkbox">
+							<input type="checkbox" value="None" id="squaredOne" name="check" />
+							<label for="squaredOne"><span>I Agree to the <strong>Terms &amp; Conditions</strong></span></label>
+						</div>
+					</div> -->
+					<!-- <button id="HomepageSubmit" href="examiner.html" type="submit" class="btn btn-submit">Submit</button> -->
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<section>
+		<div class="cut cut-top"></div>
+		<div class="container">
+			<div class="row intro-tables">
+				<div class="col-md-12">
+					<img class="col-md-10 col-md-offset-1" src="static/img/IM4791 2018-2019 Semester 2.jpg"/>
+					<!-- <div class="intro-table intro-table-first">
+						<h5 class="white heading">Upcoming Exam</h5>
+						<div class="owl-carousel owl-schedule bottom">
+							<div class="item">
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">IM4791</h5>
+										</div>
+										<div class="col-xs-6 text-right" >
+											<h5 class="white">2 May 8:30 - 10:00</h5>
+										</div>
+									</div>
+								</a>
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">IM3002</h5>
+										</div>
+										<div class="col-xs-6 text-right">
+											<h5 class="white">28 April 16:30 - 18:30</h5>
+										</div>
+									</div>
+								</a>
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">MH8300</h5>
+										</div>
+										<div class="col-xs-6 text-right">
+											<h5 class="white">26 April 14:30 - 16:00</h5>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="item">
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">IM2003</h5>
+										</div>
+										<div class="col-xs-6 text-right">
+											<h5 class="white">28 April 16:30 - 18:30</h5>
+										</div>
+									</div>
+								</a>
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">EE8087</h5>
+										</div>
+										<div class="col-xs-6 text-right">
+											<h5 class="white">27 April 13:30 - 15:30</h5>
+										</div>
+									</div>
+								</a>
+								<a href="monitor_courseID.html">
+									<div class="schedule-row row">
+										<div class="col-xs-6">
+											<h5 class="regular white">IM3003</h5>
+										</div>
+										<div class="col-xs-6 text-right">
+											<h5 class="white">2 May 16:30 - 18:30</h5>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="item">
+								<div class="schedule-row row">
+									<div class="col-xs-6">
+										<h5 class="regular white">Early Exercise</h5>
+									</div>
+									<div class="col-xs-6 text-right">
+										<h5 class="white">8:30 - 10:00</h5>
+									</div>
+								</div>
+								<div class="schedule-row row">
+									<div class="col-xs-6">
+										<h5 class="regular white">Muscle Building</h5>
+									</div>
+									<div class="col-xs-6 text-right">
+										<h5 class="white">8:30 - 10:00</h5>
+									</div>
+								</div>
+								<div class="schedule-row row">
+									<div class="col-xs-6">
+										<h5 class="regular white">Cardio</h5>
+									</div>
+									<div class="col-xs-6 text-right">
+										<h5 class="white">8:30 - 10:00</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="chatbubble" >
+            <div class="unexpanded">
+                <div class="title">Notification</div>
+            </div>
+            <div class="expanded chat-window">
+            	<div class="chats" >
+			  	<ul class="messages clearfix" id = "messages">
+                </ul>
+              	<!-- <div class="input">
+                  <form class="form-inline" id="messageSupport">
+                    <div class="form-group">
+                      <input type="text" autocomplete="off" class="form-control" name = "message" id="newMessage" placeholder="Enter Message">
+                    </div>
+                    <button type="submit" class="btn-primary">Send</button>
+                  </form>
+                </div> -->
+			  </div>
+
+                <!-- <form id="loginScreenForm">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="fullname" placeholder="Name*" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="Email Address*" required>
+                  </div>
+                  <button type="submit" class="btn btn-block btn-primary">Start Chat</button>
+                </form> -->
+              </div>
+            </div>
+	</div>
+
+	<!-- Holder for mobile navigation -->
+	<div class="mobile-nav">
+		<ul>
+		</ul>
+		<a href="" class="close-link"><i class="arrow_up"></i></a>
+	</div>
+	<!-- Scripts -->
+	<script src="static/js/jquery-1.11.1.min.js"></script>
+	<script src="static/js/owl.carousel.min.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
+	<script src="static/js/wow.min.js"></script>
+	<script src="static/js/typewriter.js"></script>
+	<script src="static/js/jquery.onepagenav.js"></script>
+	<script src="static/js/main.js"></script>
+	<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/popper.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+    <script src="static/js/axios.js"></script>
+    <script src="static/js/app.js"></script>
+    <script src="static/js/front_end_access_control.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+<!-- 	<script>
+		$('#HomepageSubmit').on('click', function(e){
+			e.preventDefault();
+			var domain = $("#dLabel").text();
+			if(domain == "Staff"){
+				window.location.replace("/staff_1.html/");
+			} else if (domain == "Student") {
+				window.location.replace("/student_1.html/");
+			}
+		}
+		});
+	</script> -->
+<!-- 	<script>
+		// When form with id messsageSupport is submitted
+		$("#messageSupport").on("submit", function(){
+			// get text from input with id newMessage
+			var text = $("#newMessage").val();
+			// append to the list with class messages
+			$("ul.messages").append(
+						'<li class="clearfix message">' +
+                            '<div class="message">' + "Examiner Broadcast: " + text +'</div>' +
+                        '</li>'
+			);
+			// show the messages
+			$("ul.messages").show();
+			// clear the input
+			//$("#newMessage").val("");
+		});
+	</script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
+<script>
+	// const socket = io.connect("http://127.0.0.1:5000");
+	socket.on('connect', function(){
+	//     let newMessage = document.getElementById('newMessage');
+	//     document.getElementById('messageSupport').onsubmit = function(e){
+	//         e.preventDefault();
+	//         let message = newMessage.value.trim();
+	//         if(message.length){
+	//             socket.emit('send_message', {
+	//                 message: message
+	//             })
+	//         }
+	//         newMessage.value = '';
+ //            newMessage.focus();
+	//     }
+	// });
+
+	socket.on('receive_message', function (data) {
+        console.log(data);
+        // const newNode = document.createElement('div');
+        // newNode.innerHTML = '${data.message}';
+        // document.getElementById('messages').appendChild(newNode);
+        // When form with id messsageSupport is submitted
+			// get text from input with id newMessage
+			var text = data;
+			// append to the list with class messages
+			$("ul.messages").append(
+						'<li class="clearfix support">' +
+                            '<div class="message">' + "Examiner Broadcast: " + text +'</div>' +
+                        '</li>'
+			);
+			// show the messages
+			$("ul.messages").show();
+		});
+});
+</script>
+</body>
+
+</html>
