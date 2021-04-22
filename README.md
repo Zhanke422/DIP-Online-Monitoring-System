@@ -8,6 +8,8 @@ report: https://docs.google.com/document/d/1udwizR1WLBA4zcjus8SWnrPvlvDAH8Rd/edi
 This is a online exam monitoring web app that leverages ML and access control to detect potential actions of cheating during online exams. 
 
 There are mainly three parts in this Github repo.
+
+
 	1. Online Monitoring System: this is our working demo that you can try it on your own deviece.
 		Packages needed: CV2, face_recognition, eventlet, flask, flask_socketio
 		+ run server.py to start the server
