@@ -11,7 +11,7 @@ There are mainly three parts in this Github repo.
 
 
 	1. Online Monitoring System: this is our working demo that you can try it on your own deviece.
-		Packages needed: CV2, face_recognition, eventlet, flask, flask_socketio
+		Packages needed: CV2, face_recognition, eventlet, flask, flask_socketio, Numpy, base64
 		+ run server.py to start the server
 		+ localhost:5000/homepage to start nevigation 
 
