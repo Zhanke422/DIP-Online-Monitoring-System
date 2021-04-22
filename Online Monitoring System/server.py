@@ -1,31 +1,16 @@
-# This is a _very simple_ example of a web service that recognizes faces in uploaded images.
-# Upload an image file and it will check if the image contains a picture of known faces.
-# The result is returned as json. For example:
-#
-# $ curl -XPOST -F "file=@obama2.jpg" http://127.0.0.1:5001
-#
-# Returns:
-#
-# {
-#  "face_found_in_image": true,
-#  "is_picture_of_nianqi": true
-# }
-#
-# This example is based on the Flask file upload example: http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
-
-# NOTE: This example requires flask to be installed! You can install it with pip:
-# $ pip3 install flask
+# This is the flask server we build for the exam monitoring system.
+# Run this file and open localhost:5000/homepage on your browser to start explore our system!
 
 from api import Student
 import eventlet
 from flask import Flask, jsonify, request, redirect, render_template
 from flask_socketio import SocketIO, emit
+from engineio.payload import Payload
 
-# from engineio.payload import Payload
 # You can change this to any folder on your system
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 # eventlet.monkey_patch()
-# Payload.max_decode_packets = 500
+Payload.max_decode_packets = 50 # if any payload warning occurs, can try to increase this number
 app = Flask(__name__)
 socketio = SocketIO(app)
 FRAME = 0
@@ -99,33 +84,6 @@ def administrator_list():
     return render_template("administrator_list.html")
 
 
-@app.route('/', methods=['GET', 'POST'])
-def upload_image():
-    # Check if a valid image file was uploaded
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-
-        file = request.files['file']
-
-        if file.filename == '':
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            # The image file seems valid! Detect faces and return the result.
-            return detect_faces_in_image(file)
-
-    # If no valid image file was uploaded, show the file upload form:
-    return '''
-    <!doctype html>
-    <title>Is this a picture of a known student?</title>
-    <h1>Upload a picture and see if it's a picture of which student!</h1>
-    <form method="POST" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <input type="submit" value="Upload">
-    </form>
-    '''
-
 
 def process_student_face(image_base64_str):
     global FRAME
@@ -152,44 +110,6 @@ def check_status_change(result):
         return "people in front of screen is not student!"
     else:
         return "there are " + str(result['people_in_the_frame']) + " people in front of screen!"
-
-
-def detect_faces_in_image(file_stream):
-    # Load some sample pictures and learn how to recognize them.
-    naq_image = face_recognition.load_image_file("naqphoto.jpg")
-    naq_face_encoding = face_recognition.face_encodings(naq_image)[0]
-    hby_image = face_recognition.load_image_file("hbyphoto.jpg")
-    hby_face_encoding = face_recognition.face_encodings(hby_image)[0]
-    known_face_encoding = [
-        naq_face_encoding,
-        hby_face_encoding
-    ]
-
-    # Load the uploaded image file
-    img = face_recognition.load_image_file(file_stream)
-    # Get face encodings for any faces in the uploaded image
-    unknown_face_encodings = face_recognition.face_encodings(img)
-
-    face_found = False
-    # is_nianqi = False
-    is_who = ""
-
-    if len(unknown_face_encodings) > 0:
-        face_found = True
-        # See if the first face in the uploaded image matches the known face of students
-        match_results = face_recognition.compare_faces(known_face_encoding, unknown_face_encodings[0])
-        if match_results[0]:
-            is_who = "Ni Anqi"
-        elif match_results[1]:
-            is_who = "Hou Boyu"
-
-    # Return the result as json
-    result = {
-        "face_found_in_image": face_found,
-        "is_picture_of_who": is_who,
-    }
-    return jsonify(result)
-
 
 
 
