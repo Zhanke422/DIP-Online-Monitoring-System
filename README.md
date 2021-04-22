@@ -12,7 +12,11 @@ There are mainly three parts in this Github repo.
 		Packages needed: CV2, face_recognition, eventlet, flask, flask_socketio
 		+ run server.py to start the server
 		+ localhost:5000/homepage to start nevigation 
+
+
 	2. Notes: It includes out notes during research, more for our own reference, can ignore.
+
+
 	3. Advanced future features: It contains other ML functions for voice detection, hand detection and body detection. A demo is available for you to try.
 
 
