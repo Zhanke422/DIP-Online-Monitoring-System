@@ -23,14 +23,18 @@ function leave() {
     clearInterval(setTimer);
     var li = document.createElement("li");
     var unit = (count_leave === 1) ? " time" : " times";
-    text = " left " + count_leave + unit;
-    li.innerHTML = "System Warning: You" + text;
-    socket.emit('access control', "Student" + text);
-    console.log("you leaved");
-    document.getElementById('messages').append(li);
-    if (count_leave >= 5){
+    if (count_leave > 1){ // ignore the first leave as in demo we found that clicking on the permission of web camera is always counted as a "leave"
+        display_count = count_leave - 1
+        text = " left " + display_count + unit;
+        li.innerHTML = "System Warning: You" + text;
+        socket.emit('access control', "Student" + text);
+        document.getElementById('messages').append(li);
+    }
+
+    if (count_leave >= 6){ // in the actual case, student leaves more than 5 times
       var button = document.getElementById("finish");
       button.click();
+      socket.emit('access control', "Student has left the screen for more than 5 times, the exam is forced to terminate.");
     }
 
 
